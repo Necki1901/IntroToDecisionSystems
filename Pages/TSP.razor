@@ -1,0 +1,50 @@
+@page "/tspsolver"
+@inject HttpClient Http
+
+<h1>Willkommen</h1>
+
+@if (tours == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tour in tours)
+            {
+                <tr>
+                    <td>@tour.Date.ToShortDateString()</td>
+                    <td>@tour.TemperatureC</td>
+                    <td>@tour.TemperatureF</td>
+                    <td>@tour.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    Tour[] tours;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tours = await Http.GetJsonAsync<Tour[]>("sample-data/tspspecs.json");
+    }
+
+    public class Tour
+    {
+        public string Name { get; set; }
+
+        public int CoordX { get; set; }
+
+    }
+}
