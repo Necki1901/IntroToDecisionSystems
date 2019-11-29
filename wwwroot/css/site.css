@@ -132,4 +132,9 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+
+}
+
+canvas {
+    border: 1px dashed black;
 }
